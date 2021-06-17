@@ -13,6 +13,8 @@ services:
     environment:
       APACHE_SERVER_NAME: csba
       APPLICATION_ENV: development
+      PHP_IDE_CONFIG: "serverName=localhost"
+      XDEBUG_CONFIG: "remote_host=host.docker.internal"
 
   db:
     image: mysql:latest
