@@ -4,7 +4,7 @@ namespace CSBA\Controllers;
 
 use CSBA\Libs\JsonResponse;
 use CSBA\Libs\Request;
-use CSBA\Libs\Response;
+use CSBA\Libs\ResponseInterface;
 
 class TestController
 {
@@ -13,7 +13,7 @@ class TestController
         return implode(',', $request->getPayload());
     }
 
-    public function bandymas2(Request $request): Response
+    public function bandymas2(Request $request): ResponseInterface
     {
         return new JsonResponse($request->toArray());
     }
