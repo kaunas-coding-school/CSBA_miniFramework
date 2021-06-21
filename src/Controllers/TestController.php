@@ -2,8 +2,9 @@
 
 namespace CSBA\Controllers;
 
+use CSBA\Libs\JsonResponse;
 use CSBA\Libs\Request;
-use http\Env\Response;
+use CSBA\Libs\Response;
 
 class TestController
 {
@@ -12,10 +13,8 @@ class TestController
         return implode(',', $request->getPayload());
     }
 
-    public function bandymas2(Request $request)
+    public function bandymas2(Request $request): Response
     {
-        $fileContent = file_get_contents(__DIR__ . '/../../Resources/Templates/index.html');
-
-        return str_replace(['{{KEY}}', '{{VALUE}}'], $request->getPayload(), $fileContent);
+        return new JsonResponse($request->toArray());
     }
 }

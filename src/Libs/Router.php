@@ -4,6 +4,7 @@ namespace CSBA\Libs;
 
 use CSBA\Exceptions\PathNotFoundException;
 use CSBA\Libs\Request;
+use CSBA\Libs\Response;
 
 class Router
 {
@@ -36,9 +37,9 @@ class Router
         $controllerClass = $this->map[$path]['controller'];
         $controllerMethod = $this->map[$path]['method'];
 
+        /*  @var Response $response */
         $response = (new $controllerClass())->$controllerMethod($this->request);
-
-echo($response);
-
+        $renderer = new Renderer();
+        $renderer->render($response);
     }
 }

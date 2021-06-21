@@ -26,4 +26,9 @@ class Request
     {
         return $this->path;
     }
+
+    public function toArray()
+    {
+        return $this->getPayload();
+    }
 }
