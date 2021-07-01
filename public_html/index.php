@@ -25,6 +25,10 @@ try {
     $router->addRoute('/kontaktai/zinute', [ContactsController::class, 'store']);
 
     $router->addRoute('/grupes', [GroupController::class, 'list']);
+    $router->addRoute('/grupe', [GroupController::class, 'show']);
+    $router->addRoute('/grupe/kurti', [GroupController::class, 'create']);
+    $router->addRoute('/grupe/redaguoti', [GroupController::class, 'update']);
+    $router->addRoute('/grupe/salinti', [GroupController::class, 'delete']);
 
     $router->init();
 } catch (\Throwable $e) {

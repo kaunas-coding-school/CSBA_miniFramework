@@ -4,47 +4,43 @@ namespace CSBA\Controllers;
 
 use CSBA\Libs\JsonResponse;
 use CSBA\Libs\Request;
-use CSBA\Libs\Response;
 use CSBA\Libs\ResponseInterface;
-use PDO;
+use CSBA\Managers\GroupRepository;
 
 class GroupController
 {
+    private GroupRepository $manager;
+
+    public function __construct()
+    {
+        $this->manager = new GroupRepository();
+    }
+
     public function list(): ResponseInterface
     {
-        $servername = 'db';
-        $username = 'devuser';
-        $password = 'devpass';
-        $dbName = 'csba_db';
-        $port = 3306;
-
-        $conn = new PDO("mysql:host=$servername;port=$port;dbname=$dbName", $username, $password);
-
-        $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-        $sqlString = "SELECT * FROM gruops";
-        $stmt = $conn->query($sqlString);
-
-        return new Response($stmt->fetchAll(PDO::FETCH_ASSOC));
+        return new JsonResponse($this->manager->getAll());
     }
 
     public function show(Request $request): ResponseInterface
     {
-
-        // ...
-
-        $group = "????";
-
-        return  new Response($group);
+        return  new JsonResponse($this->manager->findById($request->getPayload()['id']));
     }
 
-    public function create()
+    public function create(Request $request): ResponseInterface
     {
-        // ....
+        return new JsonResponse(['id' => $this->manager->create($request->getPayload())]);
     }
 
-    public function delete()
+    public function update(Request $request): ResponseInterface
     {
-        // ....
+        return new JsonResponse($this->manager->update($request->getPayload()));
+    }
+
+    public function delete(Request $request): ResponseInterface
+    {
+        $id = $request->getPayload()['id'];
+        $this->manager->deleteById($id);
+
+        return  new JsonResponse(['message' => "Elementas $id ištrintas"]);
     }
 }
