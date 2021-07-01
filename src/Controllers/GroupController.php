@@ -8,9 +8,9 @@ use CSBA\Libs\Response;
 use CSBA\Libs\ResponseInterface;
 use PDO;
 
-class TestController
+class GroupController
 {
-    public function bandymas(Request $request): ResponseInterface
+    public function list(): ResponseInterface
     {
         $servername = 'db';
         $username = 'devuser';
@@ -22,21 +22,29 @@ class TestController
 
         $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-// BAD CODE
-//        $sqlString = "SELECT * FROM persons WHERE id = '$request->getPayload()['id']'";
-//        $stmt = $conn->query($sqlString);
-
-// Good CODE
-        $sqlString = "SELECT * FROM persons WHERE id = :id";
-        $stmt = $conn->prepare($sqlString);
-        $stmt->bindValue(':id', $request->getPayload()['id']);
-        $stmt->execute();
+        $sqlString = "SELECT * FROM gruops";
+        $stmt = $conn->query($sqlString);
 
         return new Response($stmt->fetchAll(PDO::FETCH_ASSOC));
     }
 
-    public function bandymas2(Request $request): ResponseInterface
+    public function show(Request $request): ResponseInterface
     {
-        return new JsonResponse($request->toArray());
+
+        // ...
+
+        $group = "????";
+
+        return  new Response($group);
+    }
+
+    public function create()
+    {
+        // ....
+    }
+
+    public function delete()
+    {
+        // ....
     }
 }

@@ -34,7 +34,13 @@ class Renderer
     private function arrayRender(array|\Iterator $data): void
     {
         foreach ($data as $key => $item) {
-            echo $key . ' = ' . $item . '<\br>';
+            if (is_array($item)) {
+                echo '<hr>';
+                $this->arrayRender($item);
+                echo '<hr>';
+            } else {
+                echo $key . ' = ' . $item . '<br>';
+            }
         }
     }
 }

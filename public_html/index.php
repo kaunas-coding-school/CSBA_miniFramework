@@ -3,16 +3,31 @@
 require __DIR__.'/../vendor/autoload.php';
 
 use CSBA\Controllers\BasketController;
+use CSBA\Controllers\GroupController;
 use CSBA\Controllers\TestController;
 use CSBA\Libs\RequestHandler;
 use CSBA\Libs\Router;
 
-$requestHandler = new RequestHandler();
+try {
+    $serverName = getenv('APACHE_SERVER_NAME');
+    $log = new Monolog\Logger($serverName);
+    $log->pushHandler(new Monolog\Handler\StreamHandler('../logs/errors.log', Monolog\Logger::WARNING));
 
-$router = new Router($requestHandler->getRequest());
+    $requestHandler = new RequestHandler();
 
-$router->addRoute('/test/bandymas', [TestController::class, 'bandymas']);
-$router->addRoute('/test/bandymas2', [TestController::class, 'bandymas2']);
-$router->addRoute('/krepselis/deti', [BasketController::class, 'detiIKrepseli']);
+    $router = new Router($requestHandler->getRequest());
 
-$router->init();
+    $router->addRoute('/test/bandymas', [TestController::class, 'bandymas']);
+    $router->addRoute('/test/bandymas2', [TestController::class, 'bandymas2']);
+    $router->addRoute('/krepselis/deti', [BasketController::class, 'detiIKrepseli']);
+
+    $router->addRoute('/kontaktai', [ContactsController::class, 'show']);
+    $router->addRoute('/kontaktai/zinute', [ContactsController::class, 'store']);
+
+    $router->addRoute('/grupes', [GroupController::class, 'list']);
+
+    $router->init();
+} catch (\Throwable $e) {
+    echo 'Oi.. nutiko klaida';
+    $log->warning($e->getMessage());
+}
