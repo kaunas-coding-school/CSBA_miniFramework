@@ -30,6 +30,12 @@ try {
     $router->addRoute('/grupe/redaguoti', [GroupController::class, 'update']);
     $router->addRoute('/grupe/salinti', [GroupController::class, 'delete']);
 
+    $router->addRoute('/asmenys', [GroupController::class, 'list']);
+    $router->addRoute('/asmuo', [GroupController::class, 'show']);
+    $router->addRoute('/asmuo/kurti', [GroupController::class, 'create']);
+    $router->addRoute('/asmuo/redaguoti', [GroupController::class, 'update']);
+    $router->addRoute('/asmuo/salinti', [GroupController::class, 'delete']);
+
     $router->init();
 } catch (\Throwable $e) {
     echo 'Oi.. nutiko klaida';
